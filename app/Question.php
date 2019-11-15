@@ -35,4 +35,8 @@ class Question extends Model
         }
         return "unanswered";
     }
+    // public function getIdAttribute()
+    // {
+    //     return route("questions.edit", $this->id);
+    // }
 }
