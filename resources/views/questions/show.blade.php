@@ -32,7 +32,7 @@
                         <div class="media-body">
                             {!! $question->body_html !!}
                                 <div class="float-right">
-                                    <span class="text-muted">Answered {{ $question->created_date }}</span>
+                                    <span class="text-muted">Asked {{ $question->created_date }}</span>
                                     <div class="media mt-2">
                                         <a href="{{ $question->user->url }}" class="pr-2">
                                             <img src="{{ $question->user->avatar }}">
