@@ -48,17 +48,16 @@
                         </div>
                         <div class="media-body">
                             {!! $question->body_html !!}
-                                <div class="float-right">
-                                    <span class="text-muted">Asked {{ $question->created_date }}</span>
-                                    <div class="media mt-2">
-                                        <a href="{{ $question->user->url }}" class="pr-2">
-                                            <img src="{{ $question->user->avatar }}">
-                                        </a>
-                                        <div class="media-body mt-1">
-                                            <a href="{{ $question->user->url}}">{{ $question->user->name }}</a>
-                                        </div>
-                                    </div>
-                                </div>
+                              <div class="row">
+                                  <div class="col-4"></div>
+                                  <div class="col-4"></div>
+                                  <div class="col-4">
+                                      @include('shared._author', [
+                                          'model' => $question,
+                                          'label' => 'Asked'
+                                      ])
+                                  </div>
+                              </div>
                         </div>
                     </div>
                 </div>

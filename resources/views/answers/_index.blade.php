@@ -63,15 +63,10 @@
                                     </div>
                                     <div class="col-4"></div>
                                         <div class="col-4">
-                                             <span class="text-muted">Answered {{ $answer->created_date }}</span>
-                                                    <div class="media mt-2">
-                                                        <a href="{{ $answer->user->url }}" class="pr-2">
-                                                            <img src="{{ $answer->user->avatar }}">
-                                                        </a>
-                                                            <div class="media-copy">
-                                                                <a href="{{ $answer->user->url}}">{{ $answer->user->name }}</a>
-                                                            </div>
-                                                    </div>
+                                          @include('shared._author', [
+                                              'model' => $answer,
+                                              'label' => 'Answered'
+                                          ])
                                         </div>
                                     </div>
                                 </div>
