@@ -65,7 +65,7 @@
                                         <div class="col-4">
                                           @include('shared._author', [
                                               'model' => $answer,
-                                              'label' => 'Answered'
+                                              'label' => 'Answerd'
                                           ])
                                         </div>
                                     </div>
