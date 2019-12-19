@@ -32,9 +32,7 @@ onclick="event.preventDefault(); document.getElementById('down-vote-{{ $formId }
         <input type="hidden" name="vote" value="-1">
     </form>
     @if ($model instanceof App\Question)
-        @include ('shared._favorite', [
-            'model' => $model
-        ])
+    <favorite :question="{{ $model }}"></favorite>
     @elseif ($model instanceof App\Answer)
         @include ('shared._accept', [
             'model' => $model
