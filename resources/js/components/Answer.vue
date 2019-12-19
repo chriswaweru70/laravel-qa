@@ -23,22 +23,34 @@ export default {
 		},
 		update() {
 			axios
-				.patch(`/questions/${this.questionId}/answers/${this.id}`, {
+				.patch(this.endpoint, {
 					body: this.body
 				})
 				.then(res => {
-					console.log(res)
 					this.editing = false
 					this.bodyHtml = res.data.body_html
+					alert(res.data.message)
 				})
 				.catch(err => {
-					console.log(err.response)
+					alert(err.response.data.message)
 				})
+		},
+		destroy() {
+			if (confirm('Are you sure?')) {
+				axios.delete(this.endpoint).then(res => {
+					$(this.$el).fadeOut(1000, () => {
+						alert(res.data.message)
+					})
+				})
+			}
 		}
 	},
 	computed: {
 		isInvalid() {
 			return this.body.length < 10
+		},
+		endpoint() {
+			return `/questions/${this.questionId}/answers/${this.id}`
 		}
 	}
 }
