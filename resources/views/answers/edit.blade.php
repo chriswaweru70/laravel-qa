@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="card-title">
-                        <h2>Editing answer for question: <strong> {{ $question->title }}</strong> asked by {{ $question->user->name }} around {{$question->created_date}}</h2>
+                        <h2>Editing answer for question: <strong> {{ $question->title }}</strong> asked by {{ $question->user->name }} like {{$question->created_date}}</h2>
                     </div>
                     <hr>
                 <form action="{{ route('questions.answers.update', [$question->id, $answer->id]) }}" method="post">
