@@ -19,8 +19,8 @@
                       <div class="form-group">
                           <button type="submit" class="btn btn-lg btn-outline-primary">Submit</button>
                       </div>
-                  </form>
-                </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
