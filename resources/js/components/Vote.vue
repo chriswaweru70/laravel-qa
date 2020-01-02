@@ -61,7 +61,7 @@ export default {
 			}
 			axios.post(this.endpoint, { vote }).then(res => {
 				this.$toast.success(res.data.message, 'Success', {
-					timeout: 30000,
+					timeout: 3000,
 					position: 'bottomLeft'
 				})
 				this.count = res.data.votesCount

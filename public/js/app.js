@@ -11346,7 +11346,7 @@ __webpack_require__.r(__webpack_exports__);
         vote: vote
       }).then(function (res) {
         _this.$toast.success(res.data.message, 'Success', {
-          timeout: 30000,
+          timeout: 3000,
           position: 'bottomLeft'
         });
 
