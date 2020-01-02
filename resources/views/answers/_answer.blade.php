@@ -1,6 +1,6 @@
 <answer :answer ="{{ $answer }}" inline-template>
-    <div class="media post">
-    <vote :model="{{ $answer }}" name="answer"></vote>
+    {{-- <div class="media post">
+        <vote :model="{{ $answer }}" name="answer"></vote>
 
         <div class="media-body">
             <form v-if="editing" @submit.prevent="update">
@@ -30,5 +30,5 @@
                     </div>
             </div>
         </div>
-    </div> 
+    </div>  --}}
 </answer>
