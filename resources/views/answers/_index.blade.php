@@ -1,4 +1,4 @@
-@if ($answersCount > 0)
+{{-- @if ($answersCount > 0)
     <div class="row mt-4" v-cloak>
         <div class="col-md-12">
             <div class="card">
@@ -16,5 +16,5 @@
             </div>
         </div>
     </div>
-@endif
+@endif --}}
 

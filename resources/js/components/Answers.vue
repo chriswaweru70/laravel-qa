@@ -7,7 +7,12 @@
 						<h2>{{ title }}</h2>
 					</div>
 					<hr />
-					<answer v-for="answer in answers" :answer="answer" :key="answer.id"></answer>
+					<answer
+						@deleted="remove(index)"
+						v-for="(answer, index) in answers"
+						:answer="answer"
+						:key="answer.id"
+					></answer>
 					<div class="text-center mt-3" v-if="nextUrl">
 						<button @click.prevent="fetch(nextUrl)" class="btn btn-outline-secondary">Load More Answers</button>
 					</div>
@@ -32,18 +37,10 @@ export default {
 		this.fetch(`/questions/${this.questionId}/answers`)
 	},
 	methods: {
-		// next() {
-		// 	if (!this.signedIn) {
-		// 		this.$toast.warning(
-		// 			`Please login to view all the answers 🇪️🇷️`,
-		// 			'Warning',
-		// 			{
-		// 				timeout: 3000,
-		// 				position: 'center'
-		// 			}
-		// 		)
-		// 	}
-		// },
+		remove(index) {
+			this.answers.splice(index, 1)
+			this.count--
+		},
 		fetch(endpoint) {
 			if (!this.signedIn) {
 				axios.get(endpoint).then(({ data }) => {
