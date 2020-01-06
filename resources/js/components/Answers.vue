@@ -37,6 +37,7 @@ export default {
 			questionId: this.question.id,
 			count: this.question.answers_count,
 			answers: [],
+			answerids: [],
 			nextUrl: null
 		}
 	},
@@ -56,23 +57,19 @@ export default {
 			this.count--
 		},
 		fetch(endpoint) {
-			if (!this.signedIn) {
-				axios.get(endpoint).then(({ data }) => {
-					this.nextUrl = null
+			this.answerIds = []
+			axios
+				.get(endpoint)
+				.then(({ data }) => {
+					this.answerIds = data.data.map(a => a.id)
+					this.answers.push(...data.data)
+					this.nextUrl = data.next_page_url
 				})
-				this.$toast.warning(
-					`Please login to view all the answers 🇪️🇷️`,
-					'Warning',
-					{
-						timeout: 3000,
-						position: 'center'
-					}
-				)
-			}
-			axios.get(endpoint).then(({ data }) => {
-				this.answers.push(...data.data)
-				this.nextUrl = data.next_page_url
-			})
+				.then(() => {
+					this.answerIds.forEach(id => {
+						this.highlight(`answer-${id}`)
+					})
+				})
 		}
 	},
 	computed: {

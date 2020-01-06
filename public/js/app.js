@@ -11534,6 +11534,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       questionId: this.question.id,
       count: this.question.answers_count,
       answers: [],
+      answerids: [],
       nextUrl: null
     };
   },
@@ -11557,25 +11558,22 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     fetch: function fetch(endpoint) {
       var _this2 = this;
 
-      if (!this.signedIn) {
-        axios.get(endpoint).then(function (_ref) {
-          var data = _ref.data;
-          _this2.nextUrl = null;
-        });
-        this.$toast.warning("Please login to view all the answers \uD83C\uDDEA\uFE0F\uD83C\uDDF7\uFE0F", 'Warning', {
-          timeout: 3000,
-          position: 'center'
-        });
-      }
-
-      axios.get(endpoint).then(function (_ref2) {
+      this.answerIds = [];
+      axios.get(endpoint).then(function (_ref) {
         var _this2$answers;
 
-        var data = _ref2.data;
+        var data = _ref.data;
+        _this2.answerIds = data.data.map(function (a) {
+          return a.id;
+        });
 
         (_this2$answers = _this2.answers).push.apply(_this2$answers, _toConsumableArray(data.data));
 
         _this2.nextUrl = data.next_page_url;
+      }).then(function () {
+        _this2.answerIds.forEach(function (id) {
+          _this2.highlight("answer-".concat(id));
+        });
       });
     }
   },
