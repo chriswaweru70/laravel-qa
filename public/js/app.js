@@ -11670,8 +11670,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var markdown_it_prism__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(markdown_it_prism__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! autosize */ "./node_modules/autosize/dist/autosize.js");
 /* harmony import */ var autosize__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(autosize__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var prismjs_themes_prism_solarizedlight_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! prismjs/themes/prism-solarizedlight.css */ "./node_modules/prismjs/themes/prism-solarizedlight.css");
-/* harmony import */ var prismjs_themes_prism_solarizedlight_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(prismjs_themes_prism_solarizedlight_css__WEBPACK_IMPORTED_MODULE_3__);
 //
 //
 //
@@ -11693,7 +11691,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 
 
 
@@ -11796,7 +11793,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Vote_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Vote.vue */ "./resources/js/components/Vote.vue");
 /* harmony import */ var _UserInfo_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UserInfo.vue */ "./resources/js/components/UserInfo.vue");
 /* harmony import */ var _MEditor_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MEditor.vue */ "./resources/js/components/MEditor.vue");
-/* harmony import */ var _mixins_modification_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../mixins/modification.js */ "./resources/js/mixins/modification.js");
+/* harmony import */ var prismjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! prismjs */ "./node_modules/prismjs/prism.js");
+/* harmony import */ var prismjs__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(prismjs__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _mixins_modification_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../mixins/modification.js */ "./resources/js/mixins/modification.js");
 //
 //
 //
@@ -11861,6 +11860,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+
 
 
 
@@ -11872,7 +11876,7 @@ __webpack_require__.r(__webpack_exports__);
     UserInfo: _UserInfo_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     MEditor: _MEditor_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
-  mixins: [_mixins_modification_js__WEBPACK_IMPORTED_MODULE_3__["default"]],
+  mixins: [_mixins_modification_js__WEBPACK_IMPORTED_MODULE_4__["default"]],
   data: function data() {
     return {
       title: this.question.title,
@@ -11900,7 +11904,8 @@ __webpack_require__.r(__webpack_exports__);
     restoreFromCache: function restoreFromCache() {
       ;
       this.body = this.beforeEditCache.body, this.title = this.beforeEditCache.title;
-      this.editing = false;
+      var ele = this.$refs.bodyHtml;
+      if (ele) prismjs__WEBPACK_IMPORTED_MODULE_3___default.a.highlightAllUnder(ele);
     },
     payload: function payload() {
       return {
@@ -17751,25 +17756,6 @@ exports = module.exports = __webpack_require__(/*! ../../../css-loader/lib/css-b
 
 // module
 exports.push([module.i, "code[class*=\"language-\"] a[href],\npre[class*=\"language-\"] a[href] {\n\tcursor: help;\n\ttext-decoration: none;\n}\n\ncode[class*=\"language-\"] a[href]:hover,\npre[class*=\"language-\"] a[href]:hover {\n\tcursor: help;\n\ttext-decoration: underline;\n}", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/prismjs/themes/prism-solarizedlight.css":
-/*!**********************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/prismjs/themes/prism-solarizedlight.css ***!
-  \**********************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../../css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "/*\n Solarized Color Schemes originally by Ethan Schoonover\n http://ethanschoonover.com/solarized\n\n Ported for PrismJS by Hector Matos\n Website: https://krakendev.io\n Twitter Handle: https://twitter.com/allonsykraken)\n*/\n\n/*\nSOLARIZED HEX\n--------- -------\nbase03    #002b36\nbase02    #073642\nbase01    #586e75\nbase00    #657b83\nbase0     #839496\nbase1     #93a1a1\nbase2     #eee8d5\nbase3     #fdf6e3\nyellow    #b58900\norange    #cb4b16\nred       #dc322f\nmagenta   #d33682\nviolet    #6c71c4\nblue      #268bd2\ncyan      #2aa198\ngreen     #859900\n*/\n\ncode[class*=\"language-\"],\npre[class*=\"language-\"] {\n\tcolor: #657b83; /* base00 */\n\tfont-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;\n\tfont-size: 1em;\n\ttext-align: left;\n\twhite-space: pre;\n\tword-spacing: normal;\n\tword-break: normal;\n\tword-wrap: normal;\n\n\tline-height: 1.5;\n\n\t-moz-tab-size: 4;\n\t-o-tab-size: 4;\n\ttab-size: 4;\n\n\t-webkit-hyphens: none;\n\t-ms-hyphens: none;\n\thyphens: none;\n}\n\npre[class*=\"language-\"]::-moz-selection, pre[class*=\"language-\"] ::-moz-selection,\ncode[class*=\"language-\"]::-moz-selection, code[class*=\"language-\"] ::-moz-selection {\n\tbackground: #073642; /* base02 */\n}\n\npre[class*=\"language-\"]::-moz-selection, pre[class*=\"language-\"] ::-moz-selection, code[class*=\"language-\"]::-moz-selection, code[class*=\"language-\"] ::-moz-selection {\n\tbackground: #073642; /* base02 */\n}\n\npre[class*=\"language-\"]::selection, pre[class*=\"language-\"] ::selection,\ncode[class*=\"language-\"]::selection, code[class*=\"language-\"] ::selection {\n\tbackground: #073642; /* base02 */\n}\n\n/* Code blocks */\npre[class*=\"language-\"] {\n\tpadding: 1em;\n\tmargin: .5em 0;\n\toverflow: auto;\n\tborder-radius: 0.3em;\n}\n\n:not(pre) > code[class*=\"language-\"],\npre[class*=\"language-\"] {\n\tbackground-color: #fdf6e3; /* base3 */\n}\n\n/* Inline code */\n:not(pre) > code[class*=\"language-\"] {\n\tpadding: .1em;\n\tborder-radius: .3em;\n}\n\n.token.comment,\n.token.prolog,\n.token.doctype,\n.token.cdata {\n\tcolor: #93a1a1; /* base1 */\n}\n\n.token.punctuation {\n\tcolor: #586e75; /* base01 */\n}\n\n.namespace {\n\topacity: .7;\n}\n\n.token.property,\n.token.tag,\n.token.boolean,\n.token.number,\n.token.constant,\n.token.symbol,\n.token.deleted {\n\tcolor: #268bd2; /* blue */\n}\n\n.token.selector,\n.token.attr-name,\n.token.string,\n.token.char,\n.token.builtin,\n.token.url,\n.token.inserted {\n\tcolor: #2aa198; /* cyan */\n}\n\n.token.entity {\n\tcolor: #657b83; /* base00 */\n\tbackground: #eee8d5; /* base2 */\n}\n\n.token.atrule,\n.token.attr-value,\n.token.keyword {\n\tcolor: #859900; /* green */\n}\n\n.token.function,\n.token.class-name {\n\tcolor: #b58900; /* yellow */\n}\n\n.token.regex,\n.token.important,\n.token.variable {\n\tcolor: #cb4b16; /* orange */\n}\n\n.token.important,\n.token.bold {\n\tfont-weight: bold;\n}\n.token.italic {\n\tfont-style: italic;\n}\n\n.token.entity {\n\tcursor: help;\n}\n", ""]);
 
 // exports
 
@@ -63045,36 +63031,6 @@ Prism.languages.js = Prism.languages.javascript;
 
 /***/ }),
 
-/***/ "./node_modules/prismjs/themes/prism-solarizedlight.css":
-/*!**************************************************************!*\
-  !*** ./node_modules/prismjs/themes/prism-solarizedlight.css ***!
-  \**************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./prism-solarizedlight.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/prismjs/themes/prism-solarizedlight.css");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
 /***/ "./node_modules/process/browser.js":
 /*!*****************************************!*\
   !*** ./node_modules/process/browser.js ***!
@@ -64648,174 +64604,197 @@ var render = function() {
   return _c("div", { staticClass: "row justify-content-center" }, [
     _c("div", { staticClass: "col-md-12" }, [
       _c("div", { staticClass: "card" }, [
-        _vm.editing
-          ? _c(
-              "form",
+        _c(
+          "form",
+          {
+            directives: [
               {
-                staticClass: "card-body",
+                name: "show",
+                rawName: "v-show",
+                value: _vm.authorize("modify", _vm.question) && _vm.editing,
+                expression: "authorize('modify', question) && editing"
+              }
+            ],
+            staticClass: "card-body",
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.update($event)
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "card-title" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.title,
+                    expression: "title"
+                  }
+                ],
+                staticClass: "form-control form-control-lg",
+                attrs: { type: "text" },
+                domProps: { value: _vm.title },
                 on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.update($event)
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.title = $event.target.value
                   }
                 }
-              },
-              [
-                _c("div", { staticClass: "card-title" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.title,
-                        expression: "title"
-                      }
-                    ],
-                    staticClass: "form-control form-control-lg",
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.title },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
+              })
+            ]),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _c("div", { staticClass: "media" }, [
+              _c("div", { staticClass: "media-body" }, [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("m-editor", { attrs: { body: _vm.body } }, [
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.body,
+                            expression: "body"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { rows: "10", required: "" },
+                        domProps: { value: _vm.body },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.body = $event.target.value
+                          }
                         }
-                        _vm.title = $event.target.value
-                      }
-                    }
-                  })
-                ]),
+                      })
+                    ])
+                  ],
+                  1
+                ),
                 _vm._v(" "),
-                _c("hr"),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "submit", disabled: _vm.isInvalid }
+                  },
+                  [_vm._v("Update")]
+                ),
                 _vm._v(" "),
-                _c("div", { staticClass: "media" }, [
-                  _c("div", { staticClass: "media-body" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-outline-secondary",
+                    attrs: { type: "button" },
+                    on: { click: _vm.cancel }
+                  },
+                  [_vm._v("Cancel")]
+                )
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: !_vm.editing,
+                expression: "!editing"
+              }
+            ],
+            staticClass: "card-body"
+          },
+          [
+            _c("div", { staticClass: "card-title" }, [
+              _c("div", { staticClass: "d-flex align-items-center" }, [
+                _c("h1", [_vm._v(_vm._s(_vm.title))]),
+                _vm._v(" "),
+                _vm._m(0)
+              ])
+            ]),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "media" },
+              [
+                _c("vote", {
+                  attrs: { model: _vm.question, name: "question" }
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "media-body" }, [
+                  _c("div", {
+                    ref: "bodyHtml",
+                    domProps: { innerHTML: _vm._s(_vm.bodyHtml) }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-4" }, [
+                      _c("div", { staticClass: "ml-auto" }, [
+                        _vm.authorize("modify", _vm.question)
+                          ? _c(
+                              "a",
+                              {
+                                staticClass: "btn btn-sm btn-outline-info",
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.edit($event)
+                                  }
+                                }
+                              },
+                              [_vm._v("Edit")]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.authorize("deleteQuestion", _vm.question)
+                          ? _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-sm btn-outline-danger",
+                                on: { click: _vm.destroy }
+                              },
+                              [_vm._v("Delete")]
+                            )
+                          : _vm._e()
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-4" }),
+                    _vm._v(" "),
                     _c(
                       "div",
-                      { staticClass: "form-group" },
+                      { staticClass: "col-4" },
                       [
-                        _c("m-editor", { attrs: { body: _vm.body } }, [
-                          _c("textarea", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.body,
-                                expression: "body"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: { rows: "10", required: "" },
-                            domProps: { value: _vm.body },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.body = $event.target.value
-                              }
-                            }
-                          })
-                        ])
+                        _c("user-info", {
+                          attrs: { model: _vm.question, label: "Asked" }
+                        })
                       ],
                       1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary",
-                        attrs: { type: "submit", disabled: _vm.isInvalid }
-                      },
-                      [_vm._v("Update")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-outline-secondary",
-                        attrs: { type: "button" },
-                        on: { click: _vm.cancel }
-                      },
-                      [_vm._v("Cancel")]
                     )
                   ])
                 ])
-              ]
+              ],
+              1
             )
-          : _c("div", { staticClass: "card-body" }, [
-              _c("div", { staticClass: "card-title" }, [
-                _c("div", { staticClass: "d-flex align-items-center" }, [
-                  _c("h1", [_vm._v(_vm._s(_vm.title))]),
-                  _vm._v(" "),
-                  _vm._m(0)
-                ])
-              ]),
-              _vm._v(" "),
-              _c("hr"),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "media" },
-                [
-                  _c("vote", {
-                    attrs: { model: _vm.question, name: "question" }
-                  }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "media-body" }, [
-                    _c("div", {
-                      domProps: { innerHTML: _vm._s(_vm.bodyHtml) }
-                    }),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-4" }, [
-                        _c("div", { staticClass: "ml-auto" }, [
-                          _vm.authorize("modify", _vm.question)
-                            ? _c(
-                                "a",
-                                {
-                                  staticClass: "btn btn-sm btn-outline-info",
-                                  on: {
-                                    click: function($event) {
-                                      $event.preventDefault()
-                                      return _vm.edit($event)
-                                    }
-                                  }
-                                },
-                                [_vm._v("Edit")]
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.authorize("deleteQuestion", _vm.question)
-                            ? _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-sm btn-outline-danger",
-                                  on: { click: _vm.destroy }
-                                },
-                                [_vm._v("Delete")]
-                              )
-                            : _vm._e()
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-4" }),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "col-4" },
-                        [
-                          _c("user-info", {
-                            attrs: { model: _vm.question, label: "Asked" }
-                          })
-                        ],
-                        1
-                      )
-                    ])
-                  ])
-                ],
-                1
-              )
-            ])
+          ]
+        )
       ])
     ])
   ])
