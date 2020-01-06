@@ -70,7 +70,6 @@
 import Vote from './Vote.vue'
 import UserInfo from './UserInfo.vue'
 import MEditor from './MEditor.vue'
-import Prism from 'prismjs'
 import modification from '../mixins/modification.js'
 
 export default {
@@ -104,8 +103,6 @@ export default {
 		restoreFromCache() {
 			;(this.body = this.beforeEditCache.body),
 				(this.title = this.beforeEditCache.title)
-			const ele = this.$refs.bodyHtml
-			if (ele) Prism.highlightAllUnder(ele)
 		},
 		payload() {
 			return {

@@ -35,7 +35,7 @@ export default {
 			return md.render(this.body)
 		}
 	},
-	mounted() {
+	updated() {
 		autosize(this.$el.querySelector('textarea'))
 	}
 }
