@@ -14,15 +14,19 @@
 			<div class="tab-pane active" id="write">
 				<slot></slot>
 			</div>
-			<div class="tab-pane" v-html="preview" id="preview">Preview...</div>
+			<div class="tab-pane" v-html="preview" id="preview"></div>
 		</div>
 	</div>
 </template>
 
 <script>
 import MarkdownIt from 'markdown-it'
+import prism from 'markdown-it-prism'
 import autosize from 'autosize'
+import 'prismjs/themes/prism-solarizedlight.css'
+
 const md = new MarkdownIt()
+md.use(prism)
 
 export default {
 	props: ['body'],
