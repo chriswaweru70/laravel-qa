@@ -11488,6 +11488,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Answer_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Answer.vue */ "./resources/js/components/Answer.vue");
 /* harmony import */ var _NewAnswer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NewAnswer */ "./resources/js/components/NewAnswer.vue");
+/* harmony import */ var _mixins_highlight_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../mixins/highlight.js */ "./resources/js/mixins/highlight.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -11524,8 +11525,10 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['question'],
+  mixins: [_mixins_highlight_js__WEBPACK_IMPORTED_MODULE_2__["default"]],
   data: function data() {
     return {
       questionId: this.question.id,
@@ -11541,6 +11544,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     addition: function addition(answer) {
       this.answers.push(answer);
       this.count++;
+      this.highlight();
     },
     remove: function remove(index) {
       this.answers.splice(index, 1);
@@ -11722,6 +11726,7 @@ md.use(markdown_it_prism__WEBPACK_IMPORTED_MODULE_1___default.a);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _MEditor_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MEditor.vue */ "./resources/js/components/MEditor.vue");
 //
 //
 //
@@ -11745,8 +11750,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['questionId'],
+  components: {
+    MEditor: _MEditor_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   data: function data() {
     return {
       body: ''
@@ -64547,29 +64558,40 @@ var render = function() {
               }
             },
             [
-              _c("div", { staticClass: "form-group" }, [
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.body,
-                      expression: "body"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { rows: "7", name: "body", required: "" },
-                  domProps: { value: _vm.body },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.body = $event.target.value
-                    }
-                  }
-                })
-              ]),
+              _c(
+                "div",
+                { staticClass: "form-group" },
+                [
+                  _c(
+                    "m-editor",
+                    { attrs: { body: _vm.body, name: "new-answer" } },
+                    [
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.body,
+                            expression: "body"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { rows: "7", name: "body", required: "" },
+                        domProps: { value: _vm.body },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.body = $event.target.value
+                          }
+                        }
+                      })
+                    ]
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
                 _c(
@@ -77941,6 +77963,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     highlight: function highlight() {
       var el = this.$refs.bodyHtml;
+      console.log('el', el);
       if (el) prismjs__WEBPACK_IMPORTED_MODULE_0___default.a.highlightAllUnder(el);
     }
   }
