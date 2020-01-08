@@ -6,12 +6,14 @@ use App\Answer;
 use App\Question;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Resources\AnswerResource;
 
 class AnswersController extends Controller
 {
     public function index(Question $question)
     {
-        return $question->answers()->with('user')->simplePaginate(3);
+        $answer = $question->answers()->with('user')->simplePaginate(3);
+        return AnswerResource::collection($answer);
     }
     /**
       * Store a newly created resource in storage.
@@ -27,12 +29,9 @@ class AnswersController extends Controller
 
         return response()->json([
                'message' => "Your answer has been submitted successfully",
-               'answer' => $answer->load('user')
+               'answer' => new AnswerResource($answer->load('user'))
                ]);
     }
-
-  
-
 
     /**
      * Update the specified resource in storage.
@@ -65,11 +64,9 @@ class AnswersController extends Controller
     {
         $this->authorize('delete', $answer);
         $answer->delete();
-        if (request()->expectsJson()) {
-            return response()->json([
+        
+        return response()->json([
                 'message' => "Your answer has been removed"
             ]);
-        }
-        return back()->with('success', 'Your answer has been deleted');
     }
 }
