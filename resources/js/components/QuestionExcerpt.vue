@@ -14,7 +14,7 @@
 		<div class="media-body">
 			<div class="d-flex align-items-center">
 				<h3 class="mt-0">
-					<a href="#">{{ question.title }}</a>
+					 <router-link :to="{ name: 'questions.show', params: { slug: question.slug }}"> {{ question.title  }} </router-link>
 				</h3>
 				<div class="ml-auto">
 					<router-link

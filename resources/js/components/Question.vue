@@ -28,7 +28,11 @@
 						<div class="d-flex align-items-center">
 							<h1>{{ title }}</h1>
 							<div class="ml-auto">
-								<a href="/questions" class="btn btn-outline-secondary">Back to all Questions</a>
+								<router-link
+									exact
+									:to="{ name: 'questions'}"
+									class="btn btn-outline-secondary"
+								>Back to all Questions</router-link>
 							</div>
 						</div>
 					</div>
@@ -68,6 +72,7 @@
 
 <script>
 import modification from '../mixins/modification.js'
+import EventBus from '../event-bus.js'
 
 export default {
 	props: ['question'],
@@ -113,11 +118,17 @@ export default {
 		delete() {
 			axios.delete(this.endpoint).then(({ data }) => {
 				this.$toast.success(data.message, 'Success', { timeout: 2000 })
+				this.$router.push({ name: 'questions' })
 			})
-			setTimeout(() => {
-				window.location.href = '/questions'
-			}, 3000)
+			// setTimeout(() => {
+			// 	window.location.href = '/questions'
+			// }, 3000)
 		}
+	},
+	mounted() {
+		EventBus.$on('answers-count-changed', count => {
+			this.question.answers_count = count
+		})
 	}
 }
 </script>

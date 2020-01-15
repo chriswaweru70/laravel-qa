@@ -11580,6 +11580,10 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios["delete"](this.endpoint).then(function (res) {
+        _this.$toast.success(res.data.message, 'Success', {
+          timeout: 2000
+        });
+
         _this.$emit('deleted');
       });
     }
@@ -11611,6 +11615,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Answer_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Answer.vue */ "./resources/js/components/Answer.vue");
 /* harmony import */ var _NewAnswer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NewAnswer */ "./resources/js/components/NewAnswer.vue");
 /* harmony import */ var _mixins_highlight_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../mixins/highlight.js */ "./resources/js/mixins/highlight.js");
+/* harmony import */ var _event_bus_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../event-bus.js */ "./resources/js/event-bus.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -11645,6 +11650,10 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
+//
+
 
 
 
@@ -11657,7 +11666,8 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       count: this.question.answers_count,
       answers: [],
       answerids: [],
-      nextUrl: null
+      nextUrl: null,
+      excludeAnswers: []
     };
   },
   created: function created() {
@@ -11667,15 +11677,24 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     addition: function addition(answer) {
       var _this = this;
 
+      this.excludeAnswers.push(answer);
       this.answers.push(answer);
       this.count++;
       this.$nextTick(function () {
         _this.highlight("answer-".concat(answer.id));
+
+        if (_this.count === 1) {
+          _event_bus_js__WEBPACK_IMPORTED_MODULE_3__["default"].$emit('answers-count-changed', _this.count);
+        }
       });
     },
     remove: function remove(index) {
       this.answers.splice(index, 1);
       this.count--;
+
+      if (this.count === 0) {
+        _event_bus_js__WEBPACK_IMPORTED_MODULE_3__["default"].$emit('answers-count-changed', this.count);
+      }
     },
     fetch: function fetch(endpoint) {
       var _this2 = this;
@@ -11691,7 +11710,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
         (_this2$answers = _this2.answers).push.apply(_this2$answers, _toConsumableArray(data.data));
 
-        _this2.nextUrl = data.next_page_url;
+        _this2.nextUrl = data.links.next;
       }).then(function () {
         _this2.answerIds.forEach(function (id) {
           _this2.highlight("answer-".concat(id));
@@ -11702,6 +11721,15 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   computed: {
     title: function title() {
       return this.count + ' ' + (this.count > 1 ? 'Answers' : 'Answer');
+    },
+    theNextUrl: function theNextUrl() {
+      if (this.nextUrl && this.excludeAnswers.length) {
+        return this.nextUrl + this.excludeAnswers.map(function (a) {
+          return '&excludes[]=' + a.id;
+        }).join('');
+      }
+
+      return this.nextUrl;
     }
   },
   components: {
@@ -11991,6 +12019,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_modification_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../mixins/modification.js */ "./resources/js/mixins/modification.js");
+/* harmony import */ var _event_bus_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../event-bus.js */ "./resources/js/event-bus.js");
 //
 //
 //
@@ -12059,6 +12088,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['question'],
@@ -12109,11 +12143,21 @@ __webpack_require__.r(__webpack_exports__);
         _this.$toast.success(data.message, 'Success', {
           timeout: 2000
         });
-      });
-      setTimeout(function () {
-        window.location.href = '/questions';
-      }, 3000);
+
+        _this.$router.push({
+          name: 'questions'
+        });
+      }); // setTimeout(() => {
+      // 	window.location.href = '/questions'
+      // }, 3000)
     }
+  },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    _event_bus_js__WEBPACK_IMPORTED_MODULE_1__["default"].$on('answers-count-changed', function (count) {
+      _this2.question.answers_count = count;
+    });
   }
 });
 
@@ -12657,7 +12701,27 @@ __webpack_require__.r(__webpack_exports__);
     Question: _components_Question_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     Answers: _components_Answers_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  props: ['question']
+  props: ['slug'],
+  data: function data() {
+    return {
+      question: {}
+    };
+  },
+  mounted: function mounted() {
+    this.fetchQuestion();
+  },
+  methods: {
+    fetchQuestion: function fetchQuestion() {
+      var _this = this;
+
+      axios.get("/questions/".concat(this.slug)).then(function (_ref) {
+        var data = _ref.data;
+        _this.question = data.data;
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -65055,7 +65119,7 @@ var render = function() {
                       })
                     }),
                     _vm._v(" "),
-                    _vm.nextUrl
+                    _vm.theNextUrl
                       ? _c("div", { staticClass: "text-center mt-3" }, [
                           _c(
                             "button",
@@ -65064,7 +65128,7 @@ var render = function() {
                               on: {
                                 click: function($event) {
                                   $event.preventDefault()
-                                  return _vm.fetch(_vm.nextUrl)
+                                  return _vm.fetch(_vm.theNextUrl)
                                 }
                               }
                             },
@@ -65501,7 +65565,21 @@ var render = function() {
               _c("div", { staticClass: "d-flex align-items-center" }, [
                 _c("h1", [_vm._v(_vm._s(_vm.title))]),
                 _vm._v(" "),
-                _vm._m(0)
+                _c(
+                  "div",
+                  { staticClass: "ml-auto" },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "btn btn-outline-secondary",
+                        attrs: { exact: "", to: { name: "questions" } }
+                      },
+                      [_vm._v("Back to all Questions")]
+                    )
+                  ],
+                  1
+                )
               ])
             ]),
             _vm._v(" "),
@@ -65576,23 +65654,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "ml-auto" }, [
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-outline-secondary",
-          attrs: { href: "/questions" }
-        },
-        [_vm._v("Back to all Questions")]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -65647,11 +65709,25 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "media-body" }, [
       _c("div", { staticClass: "d-flex align-items-center" }, [
-        _c("h3", { staticClass: "mt-0" }, [
-          _c("a", { attrs: { href: "#" } }, [
-            _vm._v(_vm._s(_vm.question.title))
-          ])
-        ]),
+        _c(
+          "h3",
+          { staticClass: "mt-0" },
+          [
+            _c(
+              "router-link",
+              {
+                attrs: {
+                  to: {
+                    name: "questions.show",
+                    params: { slug: _vm.question.slug }
+                  }
+                }
+              },
+              [_vm._v(" " + _vm._s(_vm.question.title) + " ")]
+            )
+          ],
+          1
+        ),
         _vm._v(" "),
         _c(
           "div",
@@ -66203,16 +66279,18 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container" },
-    [
-      _c("question", { attrs: { question: _vm.question } }),
-      _vm._v(" "),
-      _c("answers", { attrs: { question: _vm.question } })
-    ],
-    1
-  )
+  return _vm.question.id
+    ? _c(
+        "div",
+        { staticClass: "container" },
+        [
+          _c("question", { attrs: { question: _vm.question } }),
+          _vm._v(" "),
+          _c("answers", { attrs: { question: _vm.question } })
+        ],
+        1
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -81431,7 +81509,7 @@ __webpack_require__.r(__webpack_exports__);
     return user.id === model.user.id;
   },
   accept: function accept(user, answer) {
-    return user.id === answer.question.user.id;
+    return user.id === answer.question_user_id;
   },
   deleteQuestion: function deleteQuestion(user, question) {
     return user.id === question.user.id && question.answers_count < 1;
@@ -83028,7 +83106,8 @@ var routes = [{
 }, {
   path: '/questions/:slug',
   component: _pages_QuestionPage_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-  name: 'questions.show'
+  name: 'questions.show',
+  props: true
 }, {
   path: '*',
   component: _pages_NotFoundPage_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
